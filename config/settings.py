@@ -40,7 +40,7 @@ SECRET_KEY = get_secret("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -55,6 +55,7 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
+    'accounts',
     'users',
     'devices',
     'classrooms',
@@ -62,7 +63,7 @@ PROJECT_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-
+    'rest_framework',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -149,3 +150,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'accounts.Student'
