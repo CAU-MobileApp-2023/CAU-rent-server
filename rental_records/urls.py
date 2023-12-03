@@ -10,6 +10,6 @@ urlpatterns = [
     path('classroom/<str:building>/<str:room>/', RentalRecordListOfClassroom.as_view()),            # 특정 강의실의 대여 정보    
     path('devices/<str:student_id>/', DeviceRentalRecordListByStudentId.as_view()),                 # 특정 학생의 장치 대여 정보
     path('classrooms/<str:student_id>/', ClassroomRentalRecordListByStudentId.as_view()),           # 특정 학생의 강의실 대여 정보
-    path('classrooms/<str:student_id>/now/', NowClassroomRentalRecordListByStudentId.as_view()),    #  
-    path('devices/<str:student_id>/now/', NowDeviceRentalRecordListByStudentId.as_view()),          # 
+    path('classrooms/<str:student_id>/now/', NowClassroomRentalRecordListByStudentId.as_view()),    
+    path('devices/<str:student_id>/now/', NowDeviceRentalRecordListByStudentId.as_view()),           
 ]
