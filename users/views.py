@@ -51,7 +51,12 @@ class UserLogin(APIView):
             return Response({'error': 'Email does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
         if user.password == password:
-            return Response({'message': 'Successfully login'}, status=status.HTTP_200_OK)
+            user_data = {
+                'email': user.email,
+                'name': user.name,
+                'student_id': user.student_id,
+            }
+            return Response({'message': 'Successfully login', 'user_data': user_data}, status=status.HTTP_200_OK)
         else:
             return Response({'error':'Incorrect password'}, status=status.HTTP_401_UNAUTHORIZED)
         
