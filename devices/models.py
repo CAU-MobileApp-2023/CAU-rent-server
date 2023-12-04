@@ -13,9 +13,9 @@ class Device(models.Model):
         unique_together = ('model_name', 'model_id')
 
     def check_availability(self, start_date, end_date):
-        from rental_records.models import RentalRecordOfDevice 
+        from rental_records.models import DeviceRentalRecord 
 
-        return not RentalRecordOfDevice.objects.filter(
+        return not DeviceRentalRecord.objects.filter(
             device=self,
             start_date__lt=end_date,
             end_date__gt=start_date
