@@ -55,6 +55,7 @@ class UserLogin(APIView):
                 'email': user.email,
                 'name': user.name,
                 'student_id': user.student_id,
+                'phone_number': user.phone_number,
             }
             return Response({'message': 'Successfully login', 'user_data': user_data}, status=status.HTTP_200_OK)
         else:
