@@ -60,7 +60,25 @@ class RentalRecordListOfDevice(APIView):
 
 class RentalRecordListOfClassroom(APIView):
     def get(self, request, building, room):
-        records = ClassroomRentalRecord.objects.filter(classroom__building=building, classroom__room=room)
+        records = ClassroomRentalRecord.objects.filter(classroom__building=building, classroom__room=room).order_by('start_date')
+        serializer = ClassroomRentalRecordSerializer(records, many=True)
+        return Response(serializer.data)
+
+from django.db.models import Q
+from datetime import datetime
+
+class RentalRecordListOfClassroomByDate(APIView):
+    def get(self, request, building, room, date):
+        try:
+            specific_date = datetime.strptime(date, '%Y-%m-%d').date()
+        except ValueError:
+            return Response({'error': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        records = ClassroomRentalRecord.objects.filter(
+            Q(classroom__building=building, classroom__room=room) &
+            Q(start_date__date=specific_date) | Q(end_date__date=specific_date)
+        ).order_by('start_date')
+
         serializer = ClassroomRentalRecordSerializer(records, many=True)
         return Response(serializer.data)
 
