@@ -4,6 +4,7 @@ from rest_framework import status
 from .models import *
 from .serializers import *
 from django.utils import timezone
+from datetime import datetime
 
 class DeviceRentalRecordList(APIView):
     def get(self, request):
@@ -64,9 +65,6 @@ class RentalRecordListOfClassroom(APIView):
         serializer = ClassroomRentalRecordSerializer(records, many=True)
         return Response(serializer.data)
 
-from django.db.models import Q
-from datetime import datetime
-
 class RentalRecordListOfClassroomByDate(APIView):
     def get(self, request, building, room, date):
         try:
@@ -75,8 +73,7 @@ class RentalRecordListOfClassroomByDate(APIView):
             return Response({'error': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
 
         records = ClassroomRentalRecord.objects.filter(
-            Q(classroom__building=building, classroom__room=room) &
-            Q(start_date__date=specific_date) | Q(end_date__date=specific_date)
+            classroom__building=building, classroom__room=room, start_date__date=specific_date
         ).order_by('start_date')
 
         serializer = ClassroomRentalRecordSerializer(records, many=True)
