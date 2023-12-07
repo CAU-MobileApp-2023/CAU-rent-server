@@ -13,13 +13,13 @@ class Classroom(models.Model):
         unique_together = ('building', 'room')
 
     def check_availability(self, check_date, start_time, end_time):
-        from rental_records.models import RentalRecordOfClassroom 
+        from rental_records.models import ClassroomRentalRecord 
 
         start_datetime = datetime.combine(check_date, start_time)
         end_datetime = datetime.combine(check_date, end_time)
 
         # 해당 시간대에 대여 기록이 있는지 확인
-        return not RentalRecordOfClassroom.objects.filter(
+        return not ClassroomRentalRecord.objects.filter(
             classroom=self,
             start_date__lt=end_datetime,
             end_date__gt=start_datetime
